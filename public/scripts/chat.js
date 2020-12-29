@@ -3,6 +3,7 @@ const socket = io.connect();
 
 const chatUserName = document.querySelector(".chat_user_name")
 const chatJoinedTime = document.querySelector(".chat_user_time")
+const chatBodyScroll = document.querySelector(".chatBody")
 const chatBody = document.querySelector(".chatBodyMessagesHistory")
 const inputField = document.querySelector(".message_form__input")
 const messageForm = document.querySelector(".chat_message_form")
@@ -19,7 +20,7 @@ let userName = ""
 let activeUsers = []
 
 const newUserConnected = (user) => {
-  userName = user || `User${genRandomInt()}`
+  userName = user || `Guest${genRandomInt()}`
   chatUserName.innerHTML = userName
   chatJoinedTime.innerHTML = `Today ${humanReadableTime()}`
   chatUserName.classList.add(`user-${userName}`)
@@ -43,20 +44,39 @@ const notifyChannel = (userName="", msg="joined the chat") => {
 // new user is created so we generate username and emit event
 newUserConnected();
 
-const addNewMessage = ({ user, message }) => {
+/**
+ * Method to build new message as html string and append to the DOM
+ * @param {*} param0 
+ */
+const appendNewMessage = ({ user, message }) => {
     const formattedTime = humanReadableTime();
+
+    let newMessage = message
+    // If message contains image link, render image
+    if (newMessage.toLowerCase().match(/\.(jpg|png|gif|jpeg)/g)) {
+        newMessage = createImage(message, "hello")
+    }
   
     const receivedMsg = `
-    <div class="message self">
-        ${message}
-    </div>`;
+        <div class="messageContainer">
+            <div class="d-flex justify-content-between chat_sender_details">
+                <div class="msg_sender_name"><h6>${user}</h6></div>
+                <div>${formattedTime}</div>
+            </div>
+            <div class="message self">${newMessage}</div>
+        </div>`;
   
     const myMsg = `
-    <div class="message others">
-        ${message}
-    </div>`;
+        <div class="messageContainer containerOthers">
+            <div class="d-flex justify-content-between chat_sender_details">
+                <div class="msg_sender_name"><h6>${user}</h6></div>
+                <div>${formattedTime}</div>
+            </div>
+            <div class="message others">${newMessage}</div>
+        </div>`;
   
-    chatBody.innerHTML += user === userName ? myMsg : receivedMsg;
+    const finalMessage = user === userName ? myMsg : receivedMsg
+    chatBody.innerHTML += finalMessage
 };
 
 messageForm.addEventListener("submit", (e) => {
@@ -85,7 +105,8 @@ inputField.addEventListener("keyup", () => {
 });
 
 socket.on("chat message", function (data) {
-    addNewMessage({ user: data.nick, message: data.message });
+    appendNewMessage({ user: data.nick, message: data.message });
+    chatBodyScroll.scrollTop = chatBodyScroll.scrollHeight;
 });
 
 socket.on("typing", function (data) {
@@ -122,13 +143,13 @@ socket.on("updated user", function (data) {
 
     if(data.oldUsername.toLowerCase() == userName.toLowerCase()) {
         userElement.innerHTML = data.newUsername
-        userElement.classList.add(`user-${data.newUsername}`)
-        userElement.classList.remove(`user-${userName}`)
+        userElement.classList.add(`user-${data.newUsername.replace(/\s/g, '')}`)
+        userElement.classList.remove(`user-${userName.replace(/\s/g, '')}`)
         userName = data.newUsername;
-    }
 
-    alert("Username changed successfully")
-    document.querySelector(".modal.is-visible").classList.remove(isVisible);
+        alert("Username changed successfully")
+        document.querySelector(".modal.is-visible").classList.remove(isVisible);
+    }
 })
 
 /**
@@ -172,7 +193,7 @@ if(clockDisplayInput) {
 }
 
 /**
- * 
+ * onEnterSend input change, set value in storage to the selected value
  */
 if(onEnterSend) {
     onEnterSend.forEach((elem) => {

@@ -73,3 +73,11 @@ document.addEventListener("click", e => {
         document.getElementById("dropdownHeader").classList.remove("visible");
     }
 });
+
+/**
+ * Method to generate image
+ */
+const createImage = function(src,title) {
+    title = title.replace(/"/g,"&quot;");
+    return '<img src="'+src+'" title="'+title+'" alt="'+title+'" />';
+}

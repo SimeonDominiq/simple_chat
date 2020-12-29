@@ -46,6 +46,10 @@ input {
     align-items: center !important;
 }
 
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
 .container {
     position: fixed;
     height: 100%;
@@ -153,7 +157,7 @@ input {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                resize: horizontal;
+                position: relative;
 
                 @include breakpoint-mini("m") {
                     font-size: to-rem(14);
@@ -209,22 +213,50 @@ input {
         }
 
         &Messages {
+            .messageContainer {
+                margin: to-rem(16);
+                width: fit-content;
+                max-width: 66%;
+
+                .chat_sender_details {
+                    color: color(Dark);
+                    font-size: to-rem(12);
+                    padding: to-rem(0 10);
+                    font-weight: 500;
+
+                    .msg_sender_name {
+                        h6 {
+                            font-size: to-rem(12);
+                            font-weight: 500;
+                            margin: 0;
+                            width: to-rem(100);
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            position: relative;
+                        }
+                    }
+                }
+
+                &.containerOthers {
+                    margin: 1rem 1rem 0 auto;
+                }
+            }
+
             .message {
                 box-sizing: border-box;
                 padding: 0.5rem 1rem;
-                margin: 1rem;
                 background: #FFF;
                 border-radius: 1.125rem 1.125rem 1.125rem 0;
+                margin: to-rem(5 16 16 16);
                 min-height: 2.25rem;
-                width: fit-content;
-                max-width: 66%;
+                font-family: 'Red hat Display', sans-serif;
                 
                 box-shadow: 
                     0 0 2rem rgba(black, 0.075),
                     0rem 1rem 1rem -1rem rgba(black, 0.1);
 
                 &.others {
-                    margin: 1rem 1rem 1rem auto ;
                     border-radius: 1.125rem 1.125rem 0 1.125rem;
                     background: color(MineShaft);
                     color: white;
@@ -242,6 +274,12 @@ input {
                     &.typing-1 { animation: typing 3s infinite }
                     &.typing-2 { animation: typing 3s 250ms infinite }
                     &.typing-3 { animation: typing 3s 500ms infinite }
+                }
+
+                img {
+                    width: to-rem(150);
+                    height: auto;
+                    max-width: 100%;
                 }
             }
         }
@@ -293,6 +331,8 @@ input {
 
                 &:focus, &:active {
                     outline: 0;
+                    box-shadow:  0 0 1rem rgba(black, 0.1),
+                    0rem 1rem 1rem -1rem rgba(black, 0.2) !important;
                 }
             }
 

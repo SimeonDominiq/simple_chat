@@ -29,6 +29,9 @@ input {
 .align-items-center {
   align-items: center !important; }
 
+.justify-content-between {
+  justify-content: space-between !important; }
+
 .container {
   position: fixed;
   height: 100%;
@@ -112,7 +115,7 @@ input {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        resize: horizontal; }
+        position: relative; }
         @media (min-width: 768px) {
           .container .chatHeaderContact .name {
             font-size: 0.875rem;
@@ -148,18 +151,36 @@ input {
       text-align: center;
       max-width: 12.5rem;
       color: #ffffff; }
+    .container .chatBodyMessages .messageContainer {
+      margin: 1rem;
+      width: fit-content;
+      max-width: 66%; }
+      .container .chatBodyMessages .messageContainer .chat_sender_details {
+        color: #252525;
+        font-size: 0.75rem;
+        padding: 0 0.625rem;
+        font-weight: 500; }
+        .container .chatBodyMessages .messageContainer .chat_sender_details .msg_sender_name h6 {
+          font-size: 0.75rem;
+          font-weight: 500;
+          margin: 0;
+          width: 6.25rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          position: relative; }
+      .container .chatBodyMessages .messageContainer.containerOthers {
+        margin: 1rem 1rem 0 auto; }
     .container .chatBodyMessages .message {
       box-sizing: border-box;
       padding: 0.5rem 1rem;
-      margin: 1rem;
       background: #FFF;
       border-radius: 1.125rem 1.125rem 1.125rem 0;
+      margin: 0.3125rem 1rem 1rem 1rem;
       min-height: 2.25rem;
-      width: fit-content;
-      max-width: 66%;
+      font-family: 'Red hat Display', sans-serif;
       box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1); }
       .container .chatBodyMessages .message.others {
-        margin: 1rem 1rem 1rem auto;
         border-radius: 1.125rem 1.125rem 0 1.125rem;
         background: #333333;
         color: white; }
@@ -177,6 +198,10 @@ input {
           animation: typing 3s 250ms infinite; }
         .container .chatBodyMessages .message .typing.typing-3 {
           animation: typing 3s 500ms infinite; }
+      .container .chatBodyMessages .message img {
+        width: 9.375rem;
+        height: auto;
+        max-width: 100%; }
   .container .chartFooter {
     position: absolute;
     width: 100%;
@@ -216,7 +241,8 @@ input {
         letter-spacing: 0.025em;
         margin-right: 15px; }
         .container .chartFooterForm input:focus, .container .chartFooterForm input:active {
-          outline: 0; }
+          outline: 0;
+          box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.2) !important; }
       .container .chartFooterForm button {
         border: 0px solid;
         height: 40px;
