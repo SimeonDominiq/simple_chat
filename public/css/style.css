@@ -71,7 +71,8 @@ input {
       .container .chatHeaderSettings button {
         background: none;
         border: 0px solid;
-        position: relative; }
+        position: relative;
+        cursor: pointer; }
       .container .chatHeaderSettingsDropdown {
         position: absolute;
         width: 12.5rem;
@@ -179,6 +180,7 @@ input {
       margin: 0.3125rem 1rem 1rem 1rem;
       min-height: 2.25rem;
       font-family: 'Red hat Display', sans-serif;
+      font-size: 0.875rem;
       box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1); }
       .container .chatBodyMessages .message.others {
         border-radius: 1.125rem 1.125rem 0 1.125rem;

@@ -99,6 +99,7 @@ input {
                 background: none;
                 border: 0px solid;
                 position: relative;
+                cursor: pointer;
             }
 
             &Dropdown {
@@ -251,6 +252,7 @@ input {
                 margin: to-rem(5 16 16 16);
                 min-height: 2.25rem;
                 font-family: 'Red hat Display', sans-serif;
+                font-size: to-rem(14);
                 
                 box-shadow: 
                     0 0 2rem rgba(black, 0.075),

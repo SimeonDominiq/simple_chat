@@ -79,18 +79,42 @@ const appendNewMessage = ({ user, message }) => {
     chatBody.innerHTML += finalMessage
 };
 
-messageForm.addEventListener("submit", (e) => {
+function sendChat(e) {
     e.preventDefault();
+
     if (!inputField.value) {
-      return;
+        return;
     }
-  
+    
     socket.emit("chat message", {
-      message: inputField.value,
-      nick: userName,
+        message: inputField.value,
+        nick: userName
     });
-  
+
     inputField.value = "";
+}
+
+messageForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+    let userSettings = cacheStorage.getValueFromStorage()
+    userSettings = userSettings ? JSON.parse(userSettings) : {}
+
+	sendChat(e)
+});
+
+/**
+ * Form event handler to submit form if user turned on CMD + Enter to send message
+ */
+messageForm.addEventListener('keydown', function(e) {
+    let userSettings = cacheStorage.getValueFromStorage()
+    userSettings = userSettings ? JSON.parse(userSettings) : {}
+
+	if(userSettings.onEnterSend == "on" && (e.keyCode == 13 && e.metaKey)) {
+        const target = e.target;
+        if(target.form) {
+            sendChat(e)
+        }
+    }
 });
 
 /**
@@ -118,10 +142,12 @@ socket.on("typing", function (data) {
     }
   
     fallback.innerHTML = `
-    <div class="message stack">
-        <div class="typing typing-1"></div>
-        <div class="typing typing-2"></div>
-        <div class="typing typing-3"></div>
+    <div class="messageContainer">
+        <div class="message stack">
+            <div class="typing typing-1"></div>
+            <div class="typing typing-2"></div>
+            <div class="typing typing-3"></div>
+        </div>
     </div>`;
 });
 
@@ -160,7 +186,7 @@ socket.on("updated user", function (data) {
 const hasDefaultSettings = cacheStorage.getValueFromStorage()
 const userDefaultSettings = {
     clockDisplay: 12,
-    onEnterSend: "on"
+    onEnterSend: "off"
 }
 if(!hasDefaultSettings) {
     const result = cacheStorage.setValueToStorage(userDefaultSettings)
