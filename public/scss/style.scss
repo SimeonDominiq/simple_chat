@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap');
+
+@import "utils/breakpoints";
+@import "utils/colors";
+
+//Mixins
+@import "mixins/colors";
+@import "mixins/converter";
+
+body {
+    background: color(LighterGrey);
+    margin: 0;
+    padding: 0;
+    font-family: 'Red hat Display', sans-serif;
+    font-weight: 400;
+	line-height: 1.25em;
+	letter-spacing: 0.025em;
+}
+
+button {
+    font-family: 'Red hat Display', sans-serif;
+    &:focus, &:active {
+        outline: 0 !important;
+    }
+}
+
+input {
+    box-shadow: none;
+    outline: 0;
+
+    &:focus, &:active {
+        outline: 0 !important;
+        box-shadow: none !important;
+    }  
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    @include breakpoint-mini("xs") {
+        width: 99.9%;
+    }
+
+    @include breakpoint-mini("xl") {
+        left: 50%;
+        transform: translateX(-50%);
+        padding: to-rem(0 15);
+        margin: 0 auto;
+        box-shadow:  0 0 1rem rgba(black, 0.1),
+        0rem 1rem 1rem -1rem rgba(black, 0.2);
+    }
+
+    @include breakpoint-mini("xl") {
+        width: to-rem(1140);
+    }
+
+    .chatHeader {
+        position: absolute;
+        min-height: to-rem(50);
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: color(White);
+        color: color(BlueRibbon);
+        box-shadow: 0 0 8rem 0 rgba(black, 0.1),
+        0rem 2rem 4rem -3rem rgba(black, 0.5);
+        box-sizing: border-box;
+        z-index: 2;
+
+        @include breakpoint-mini('l') {
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+
+        &Settings {
+            position: absolute;
+            right: to-rem(10);
+            top: to-rem(16);
+
+            button {
+                background: none;
+                border: 0px solid;
+                position: relative;
+            }
+
+            &Dropdown {
+                position: absolute;
+                width: to-rem(200);
+                background: color(White);
+                border-bottom-right-radius: to-rem(5);
+                border-bottom-left-radius: to-rem(5);
+                box-shadow: to-rem(0 2 4) rgba(0, 0, 0, 0.05);
+                right: to-rem(4);
+                visibility: hidden;
+
+                button {
+                    cursor: pointer;
+                    display: block;
+                    font-family: 'Red hat Display', sans-serif;
+                    font-size: to-rem(12);
+                    font-weight: 500;
+                    padding: to-rem(10);
+                    width: 100%;
+                    
+                    &:not(:last-child) {
+                        border-bottom: to-rem(1) solid color(LighterGrey);
+                    }
+                }
+
+                &.visible {
+                    visibility: visible;
+                }
+            }
+        }
+
+        &Contact {
+            flex-basis: 3.5rem;
+            flex-shrink: 0;
+            margin: .5rem;
+            box-sizing: border-box;
+            display: flex;
+
+            .pic {
+                margin-right: to-rem(5);
+                img {
+                    height: to-rem(40);
+                    width: to-rem(40);
+                    max-width: 100%;
+                    border-radius: 100%;
+                }
+            }
+
+            .name {
+                color: color(Black);
+                font-weight: 500;
+                font-size: to-rem(12);
+                margin-bottom: 0;
+                width: to-rem(200);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                resize: horizontal;
+
+                @include breakpoint-mini("m") {
+                    font-size: to-rem(14);
+                    margin-bottom: to-rem(2);
+                }
+            }
+
+            .message, .seen {
+                font-size: to-rem(10);
+                color: color(DustyGrey);
+
+                @include breakpoint-mini("m") {
+                    font-size: to-rem(12);
+                }
+            }
+        }
+    }
+
+    .chatBody {
+        position: fixed;
+        width: 100%;
+        top: to-rem(50);
+        left: 0;
+        height: calc(100% - 118px);
+        flex-shrink: 2;
+        overflow-y: auto;
+        box-shadow: 
+            inset 0 2rem 2rem -2rem rgba(black, 0.05),
+            inset 0 -2rem 2rem -2rem rgba(black, 0.05);
+        
+        &::-webkit-scrollbar {
+            width: .6rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: color(Black);
+            outline: 1px solid color(DustyGrey);
+        }
+
+        .chatNotify {
+            margin: 0 auto;
+            min-width: 100px;
+            border-radius: 15rem;
+            background: color(MineShaft);
+            font-size: 14px;
+            text-align: center;
+            max-width: to-rem(200);
+            color: color(White);
+        }
+
+        &Messages {
+            .message {
+                box-sizing: border-box;
+                padding: 0.5rem 1rem;
+                margin: 1rem;
+                background: #FFF;
+                border-radius: 1.125rem 1.125rem 1.125rem 0;
+                min-height: 2.25rem;
+                width: fit-content;
+                max-width: 66%;
+                
+                box-shadow: 
+                    0 0 2rem rgba(black, 0.075),
+                    0rem 1rem 1rem -1rem rgba(black, 0.1);
+
+                &.others {
+                    margin: 1rem 1rem 1rem auto ;
+                    border-radius: 1.125rem 1.125rem 0 1.125rem;
+                    background: color(MineShaft);
+                    color: white;
+                }
+
+                .typing {
+                    display: inline-block;
+                    width: 0.8rem;
+                    height: 0.8rem;
+                    margin-right: 0rem;
+                    box-sizing: border-box;
+                    background: #ccc;
+                    border-radius: 50%;
+                    
+                    &.typing-1 { animation: typing 3s infinite }
+                    &.typing-2 { animation: typing 3s 250ms infinite }
+                    &.typing-3 { animation: typing 3s 500ms infinite }
+                }
+            }
+        }
+    }
+
+    .chartFooter {
+        position: absolute;
+        width: 100%;
+        min-height: 20px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        &Form {
+            background: color(White);
+            box-sizing: border-box;
+            flex-basis: 4rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            padding: .8rem 0.2rem .8rem 0.5rem;
+            box-shadow: 0 0 8rem 0 rgba(black, 0.1),
+        0rem 2rem 4rem -3rem rgba(black, 0.5);
+
+            @include breakpoint-mini('l') {
+                border-top-left-radius: 1rem;
+                border-top-right-radius: 1rem;
+            }
+
+            input {
+                border-radius: 15rem;
+                border: 1px solid #cccccc;
+                position: relative;
+                width: 100%;
+                height: 35px;
+                outline: 0;
+                box-shadow: none;
+                border:none;
+                background-image:none;
+                background-color: white;
+                flex-grow: 2;
+			    box-shadow:  0 0 1rem rgba(black, 0.1),
+                0rem 1rem 1rem -1rem rgba(black, 0.2);
+                padding: 3px 8px;
+                font-family: 'Red hat Display', sans-serif;
+                font-weight: 400;
+                letter-spacing: 0.025em;
+                margin-right: 15px;
+
+                &:focus, &:active {
+                    outline: 0;
+                }
+            }
+
+            button {
+                border: 0px solid;
+                height: 40px;
+                width: 43px;
+                border-radius: 50%;
+                background: color(Black);
+                color: White;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.modal { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0,0,0, 0.7);
+    cursor: pointer;
+    visibility: hidden;
+    transition: all 0.35s ease-in;
+
+    &.is-visible {
+        visibility: visible;
+
+        .modal-dialog {
+            visibility: visible;
+        }
+    }
+
+    .modal-dialog {
+        position: relative;
+        max-width: 800px;
+        max-height: 80vh;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 1);
+        overflow: auto;
+        cursor: default;
+        visibility: hidden;
+        width: 100%;
+
+        h6 {
+            margin: 0;
+            padding: 0;
+            color: color(Dark);
+            font-size: 14px;
+        }
+
+        @include breakpoint-mini('l') {
+            width: 30%;
+        }
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+    
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+
+        button {
+            background: none !important;
+            border: 0px solid !important;
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+        }
+    }
+
+    .modal-footer {
+        padding: 1rem;
+
+        button {
+            background: none;
+            display: block;
+            border: 0px solid;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Red hat Display', sans-serif;
+            width: 100%;
+            text-align: center;
+        }
+    }
+    
+    .modal p + p {
+        margin-top: 1rem;
+    }
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 10px;
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.custom_radio__input {
+    > div {
+        width: 50%;
+
+        @include breakpoint-mini('l') {
+            width: 50%;
+        }
+    }
+
+    label {
+        font-weight: 400;
+    }
+
+    .radio { 
+        font-size: 14px;
+        color: color(Dark);
+        display: grid;
+        grid-template-columns: min-content auto;
+        grid-gap: 0.5em;
+    }
+
+    .radio__control {
+        display: block;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        border: 0.3em solid currentColor;
+        transform: translateY(-0.05em);
+    }
+
+    .radio__input {
+        display: flex;
+        align-items: center;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+          margin-left: 0;
+
+        &:checked + .radio__control {
+            background: radial-gradient(currentcolor 50%, rgba(255, 0, 0, 0) 51%);
+        }
+
+        + .radio__control::before {
+            content: "";
+            width: .5em;
+            height: .5em;
+            box-shadow: inset .5em .5em currentColor;
+            border-radius: 50%;
+            transition: 180ms transform ease-in-out;
+            transform: scale(0);    
+          }
+        }
+    }
+}
+
+@keyframes typing {
+	0%, 75%, 100% {
+		transform: translate(0, 0.25rem) scale(0.9);
+		opacity: 0.5;
+	}
+	
+	25% {
+		transform: translate(0, -0.25rem) scale(1);
+		opacity: 1;
+	}
+}
+
+.btn {
+    border: 0px solid;
+    display: block;
+    font-family: 'Red hat Display', sans-serif;
+    font-size: to-rem(14);
+    outline: 0;
+    padding: to-rem(10 25);
+
+    &.btn-rounded {
+        border-radius: 15rem;
+    }
+
+    &.btn-default {
+        background: color(Black);
+        color: color(White);
+    }
+}
+
+.form-control {
+    border: to-rem(1) solid color(LighterGrey);
+    border-radius: 15rem;
+    font-family: 'Red hat Display', sans-serif;
+    font-size: to-rem(14);
+    height: to-rem(40);
+    padding: to-rem(5 8);
+    width: 95%;
+}
