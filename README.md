@@ -2,7 +2,7 @@
 
 This is a real-time group chat communication powered by socket.io
 
-### How it works
+## How it works
 
 - Users visit the app on the hosted URL and a unique username is generated to identify th user
 - Users are presented with a nice and interactive interface with a text input for typing and button to send chat messages
@@ -11,7 +11,6 @@ This is a real-time group chat communication powered by socket.io
 - Users can turn on the option to send message with ctrl/CMD + Enter
 
 ## Development Environment
-### Setup
 Ensure you have the following softwares installed:
 - [Node](https://nodejs.org)
 - [Nodemon](https://github.com/remy/nodemon)
@@ -23,11 +22,11 @@ Clone the [repository](https://github.com/SimeonDominiq/simple_chat.git) and pro
 
 This chat application was written with socket.io version `3.0.4` both on the client and on the server
 
-## Setting up
+## Setting up the App
 
 ### Installing project dependencies
 
-to install the dependencies and
+To install the dependencies, from within the application's root directory:
 
 ```sh
 npm install
@@ -43,14 +42,14 @@ To start up the application, From the application's root directory run `npm star
 npm start
 ```
 
-#### Viewing the App
+## Viewing the App
 To load the app, visit the url below in a browser:
 
     http://localhost:2021
 
 Voila... The project is up and running.
 
-### Task checklist
+## Task checklist
 - [x] Chat message box to list messages
 - - [x] The user’s messages should be on the right and the other user’s messages should be on the left
 - - [x] Each message should display the time it was sent
